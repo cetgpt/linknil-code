@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+}
+
+body{
+    width:350px;
+    min-height:540px;
+    padding:12px;
+
+    background:#f3f4f6;
+}
+
+.app{
+	position:relative;
+	overflow:hidden;
+	
+	max-width:370px;
+	margin:auto;
+	
+	backdrop-filter:blur(18px);
+
+    background:
+        radial-gradient(circle at top left,#172554,#020617 60%);
+
+    border-radius:28px;
+
+    padding:14px;
+
+    color:white;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.5),
+0 0 35px rgba(59,130,246,.12);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.topbar{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:14px;
+}
+
+.logo{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.logo-icon{
+
+    width:34px;
+    height:34px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff004c,
+            #3b82f6
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:800;
+    font-size:18px;
+}
+
+.logo h1{
+    font-size:16px;
+}
+
+.logo p{
+    font-size:10px;
+    opacity:.6;
+}
+
+.close{
+    opacity:.7;
+    font-size:14px;
+}
+
+.layout{
+    display:block;
+}
+
+.left{
+    width:100%;
+}
+
+.right{
+    width:100%;
+    margin-top:12px;
+}
+
+.label{
+    font-size:10px;
+    opacity:.7;
+    margin-bottom:6px;
+    margin-top:10px;
+}
+
+input,
+select,
+textarea{
+transition:.2s ease;
+
+    width:100%;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    outline:none;
+
+    color:white;
+
+    height:40px;
+
+    border-radius:10px;
+
+    padding:0 12px;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+input:hover,
+select:hover,
+textarea:hover{
+
+border-color:
+rgba(59,130,246,.35);
+
+background:
+rgba(255,255,255,.07);
+}
+
+textarea{
+    height:62px;
+    padding-top:10px;
+    resize:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,.15);
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.row3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+}
+
+.stat-grid{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+
+    margin-bottom:16px;
+}
+
+.stat{
+
+height:35px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.08),
+rgba(255,255,255,.03)
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+backdrop-filter:blur(12px);
+
+box-shadow:
+inset 0 1px 1px rgba(255,255,255,.06),
+0 10px 25px rgba(0,0,0,.18);
+
+transition:.25s;
+}
+
+.stat:hover{
+
+transform:translateY(-2px);
+
+border-color:
+rgba(59,130,246,.35);
+}
+
+.stat h2{
+
+font-size:13px;
+
+font-weight:800;
+
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#60a5fa
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+0 0 12px rgba(96,165,250,.35);
+}
+
+.stat span{
+    font-size:9px;
+    opacity:.6;
+}
+
+.progress-title{
+
+    display:flex;
+    justify-content:space-between;
+
+    font-size:10px;
+
+    margin-bottom:6px;
+}
+
+.progress-wrap{
+
+    height:6px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.08);
+
+    margin-bottom:14px;
+}
+
+.progress{
+
+height:100%;
+width:0%;
+
+background:
+linear-gradient(
+90deg,
+#00ffcc,
+#3b82f6,
+#8b5cf6
+);
+
+background-size:200% 200%;
+
+animation:
+gradientMove 3s linear infinite;
+
+transition:.35s;
+}
+
+/* STATUS BOX FIX */
+
+#status{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:7px;
+
+padding:2px 10px;
+
+min-height:unset;
+
+height:auto;
+
+font-size:10px;
+font-weight:700;
+
+border-radius:14px;
+
+background:
+linear-gradient(
+135deg,
+rgba(255,0,90,.10),
+rgba(120,0,180,.10)
+);
+
+border:
+1px solid rgba(255,0,100,.14);
+
+box-shadow:
+0 3px 12px rgba(0,0,0,.18);
+
+color:white;
+
+margin-bottom:8px;
+}
+
+/* DOT */
+
+.status-dot{
+
+width:6px;
+height:6px;
+margin-right:6px;
+
+border-radius:50%;
+
+background:#ff3b6b;
+
+box-shadow:
+0 0 8px #ff3b6b;
+
+flex:none;
+}
+
+.circle-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+
+    margin-top:8px;
+}
+
+.circle-btn{
+
+    width:100%;
+    height:42px;
+
+    border-radius:12px;
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    margin:auto;
+
+    backdrop-filter:blur(10px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.circle-btn:hover{
+
+    transform:
+    translateY(-3px)
+    scale(1.04);
+
+    filter:brightness(1.08);
+}
+
+.circle-btn:active{
+
+    transform:scale(.96);
+}
+
+.circle-btn:hover{
+    transform:scale(1.07);
+}
+
+.play{
+
+background:
+linear-gradient(
+135deg,
+#22c55e,
+#166534
+);
+
+box-shadow:
+0 0 15px rgba(34,197,94,.45);
+
+}
+
+.stop{
+
+background:
+linear-gradient(
+135deg,
+#fb7185,
+#9f1239
+);
+
+box-shadow:
+0 0 15px rgba(251,113,133,.4);
+
+}
+
+.export{
+
+background:
+linear-gradient(
+135deg,
+#60a5fa,
+#1d4ed8
+);
+
+box-shadow:
+0 0 15px rgba(96,165,250,.45);
+
+}
+
+.clear{
+
+background:
+linear-gradient(
+135deg,
+#a78bfa,
+#6d28d9
+);
+
+box-shadow:
+0 0 15px rgba(167,139,250,.45);
+
+}
+
+.circle-btn div{
+
+margin-top:2px;
+
+font-size:8px;
+
+line-height:1;
+}
+
+.edit{
+
+    margin-top:14px;
+
+    width:72px;
+    height:32px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-weight:600;
+}
+
+.toggle-btn{
+
+position:absolute;
+
+top:14px;
+right:14px;
+
+width:32px;
+height:32px;
+
+border:none;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+font-size:13px;
+
+cursor:pointer;
+
+z-index:999;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+backdrop-filter:blur(14px);
+
+transition:.25s;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.22);
+
+border:
+1px solid rgba(255,255,255,.06);
+}
+
+.toggle-btn:hover{
+
+transform:
+scale(1.08)
+rotate(180deg);
+
+background:
+rgba(255,255,255,.14);
+}
+
+.toggle-btn:hover{
+
+    transform:scale(1.08);
+
+    background:
+        rgba(255,255,255,.14);
+}
+
+.toggle-btn:hover{
+
+    transform:scale(1.08);
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+option{
+    color:black;
+}
+
+.remember-wrap{
+
+    margin-top:10px;
+
+    display:flex;
+    align-items:center;
+}
+
+.remember-label{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:11px;
+
+    opacity:.85;
+
+    cursor:pointer;
+}
+
+.remember-label input{
+
+    width:14px;
+    height:14px;
+}
+
+@keyframes gradientMove{
+
+0%{
+background-position:0% 50%;
+}
+
+100%{
+background-position:100% 50%;
+}
+
+}
+
+::-webkit-scrollbar{
+width:6px;
+}
+
+::-webkit-scrollbar-track{
+background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+
+background:
+linear-gradient(
+180deg,
+#3b82f6,
+#8b5cf6
+);
+
+border-radius:999px;
+}
+
+/* LOOP INPUT KECIL */
+
+.row3{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr 1fr;
+
+gap:6px;
+}
+
+.row3 input{
+
+height:25px !important;
+
+padding:0 6px !important;
+
+font-size:10px !important;
+
+text-align:center;
+}
+
+.row3 input{
+
+width:100%;
+
+min-width:0;
+}
+
+/* SCHEME SHORTENER APP */
+
+.row-select{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr 1fr;
+
+gap:6px;
+}
+
+.row-select select{
+
+height:25px !important;
+
+padding:0 6px !important;
+
+font-size:10px !important;
+
+}
+
+/* TITLE MODE DOMAIN MODE*/
+
+.row-advanced{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:6px;
+}
+
+.row-advanced select{
+
+height:25px !important;
+
+padding:0 6px !important;
+
+font-size:10px !important;
+
+}
+
+/* TITLE MODE & VALUE & TARGET LINK & IMAGE URL*/
+
+.title-row{
+
+display:grid;
+
+grid-template-columns:
+60px 1fr;
+
+gap:10px;
+
+align-items:end;
+}
+
+.title-row select,
+.title-row input{
+
+height:32px !important;
+
+padding:0 8px !important;
+
+font-size:11px !important;
+}
+
+/* INFO BOX */
+
+.info-box{
+
+margin-top:10px;
+}
+
+.info-box textarea{
+
+height:150px;
+
+resize:none;
+
+font-size:10px;
+
+padding:10px;
+}
+
+.info-actions{
+
+display:flex;
+
+gap:6px;
+
+margin-top:6px;
+}
+
+.info-actions button{
+
+flex:1;
+
+height:20px;
+
+border:none;
+
+border-radius:10px;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+font-size:8px;
+
+cursor:pointer;
+
+transition:.2s;
+}
+
+.info-actions button:hover{
+
+background:
+rgba(255,255,255,.14);
+}
+
+/* LOOP MONITOR */
+
+#loopMonitor{
+
+display:flex;
+
+align-items:center;
+justify-content:space-between;
+
+margin-top:6px;
+margin-bottom:6px;
+
+padding:8px 10px;
+
+border-radius:12px;
+
+background:
+linear-gradient(
+135deg,
+rgba(59,130,246,.12),
+rgba(139,92,246,.10)
+);
+
+border:
+1px solid rgba(255,255,255,.06);
+
+backdrop-filter:
+blur(8px);
+
+box-shadow:
+0 4px 16px rgba(0,0,0,.18);
+
+min-height:42px;
+}
+
+#loopCurrent{
+
+font-size:11px;
+
+font-weight:700;
+
+line-height:1.2;
+
+color:white;
+}
+
+#loopState{
+
+padding:5px 12px;
+
+border-radius:999px;
+
+font-size:10px;
+
+font-weight:800;
+
+background:
+rgba(34,197,94,.18);
+
+color:#4ade80;
+
+box-shadow:
+0 0 18px rgba(34,197,94,.25);
+
+animation:
+statusPulse 1.6s infinite;
+}
+
+/* ANIMATION */
+
+@keyframes statusPulse{
+
+0%{
+
+transform:scale(1);
+
+box-shadow:
+0 0 0 rgba(34,197,94,.15);
+}
+
+50%{
+
+transform:scale(1.05);
+
+box-shadow:
+0 0 18px rgba(34,197,94,.4);
+}
+
+100%{
+
+transform:scale(1);
+
+box-shadow:
+0 0 0 rgba(34,197,94,.15);
+}
+}
+
+.section-card{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:14px;
+
+    padding:12px;
+
+    margin-bottom:10px;
+}
+
+.section-title{
+
+    font-size:11px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    color:#8ab4ff;
+
+    margin-bottom:10px;
+
+    text-transform:uppercase;
+}
+
+.accordion{
+
+    cursor:pointer;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px 12px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    margin-bottom:8px;
+
+    font-size:11px;
+    font-weight:700;
+
+    color:#dbeafe;
+}
+
+.accordion:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.accordion-content{
+    display:none;
+    padding-top:8px;
+}
+
+.accordion-content.show{
+    display:block;
+}
+
+.acc-arrow{
+    transition:.2s;
+}
+
+.acc-arrow.rotate{
+    transform:rotate(180deg);
+}
+
+.tab-bar{
+
+    display:flex;
+
+    gap:5px;
+
+    margin:0 0 12px;
+}
+
+.tab-btn{
+
+    flex:1;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    background:rgba(255,255,255,.06);
+
+    color:#cbd5e1;
+
+    transition:.2s;
+}
+
+.tab-btn:hover{
+
+    background:rgba(255,255,255,.12);
+}
+
+.tab-btn.active{
+
+    background:#3b82f6;
+
+    color:white;
+}
+
+.tab-indicator{
+
+    margin-bottom:12px;
+
+    padding:8px 12px;
+
+    border-radius:10px;
+
+    background:rgba(59,130,246,.12);
+
+    border:1px solid rgba(59,130,246,.25);
+
+    font-size:11px;
+
+    font-weight:700;
+
+    color:#93c5fd;
+}
+
+.hidden-tab{
+    display:none !important;
+}
+
+.tab-content-panel{
+    display:none;
+}
+
+.tab-content-panel.active{
+    display:block;
+}
+
+#generatorPanel{
+    padding:10px;
+}
+
+#clearLogBtn{
+    width:100%;
+    height:24px;
+    margin-top:4px;
+    font-size:10px;
+    border-radius:12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="topbar">
+
+<div class="logo">
+
+<div class="logo-icon">
+LN
+</div>
+
+<div>
+<p>LinkNil Hyoool</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="tab-bar">
+
+<button class="tab-btn active" data-tab="main">
+    MAIN
+</button>
+
+<button class="tab-btn" data-tab="advanced">
+    ADVANCED
+</button>
+
+<button class="tab-btn" data-tab="generator">
+    COSTUM
+</button>
+
+<button class="tab-btn" data-tab="status">
+    STATUS
+</button>
+
+</div>
+
+<div class="tab-indicator">
+    MAIN TAB ACTIVE
+</div>
+
+<div class="layout">
+
+<div class="left" id="leftPanel">
+
+<div
+class="section-card"
+id="targetPanel"
+>
+
+<div class="label">TARGET LINK</div>
+
+<input
+type="text"
+id="target"
+placeholder="LINKE SAMEAN"
+/>
+
+<div class="row-advanced">
+
+    <div>
+        <div class="label">
+            TITLE MODE
+        </div>
+
+        <select id="titleMode">
+            <option value="random">
+                Default
+            </option>
+            <option value="custom">
+                Custom
+            </option>
+            <option value="auto">
+                Auto
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <div class="label">
+            DOMAIN MODE
+        </div>
+
+        <select id="domainMode">
+            <option value="default">
+                Default
+            </option>
+            <option value="list">
+                Domain List
+            </option>
+        </select>
+    </div>
+
+</div>
+	
+    <div
+        class="label"
+        style="margin-top:10px;"
+    >
+        TITLE VALUE | {emoji} {symbol} {view}
+    </div>
+
+    <textarea
+        id="titleValue"
+        placeholder="{emoji} TEXT {symbol} {view} / {emoji:2} {symbol:2}"
+        style="height:45px;"
+    ></textarea>
+
+    <div class="label">IMAGE URL</div>
+
+    <textarea
+        id="imageurl"
+        placeholder="https://a.com/1.jpg&#10;https://a.com/2.jpg&#10"
+        style="height:50px;"
+    ></textarea>
+
+    <div class="label">
+        RESULT SELECTOR
+        <br>
+        [#basic, #withslug, #fb_l, #fb_w, #shorten]
+    </div>
+
+    <textarea
+        id="resultSelector"
+        style="
+        height:30px;
+        font-size:10px;
+        "
+    ></textarea>
+
+</div>
+
+<div class="section-card" id="loopPanel">
+
+	<div class="row-select">
+	    <div>
+        <div class="label">SCHEME</div>
+        <select id="scheme">
+            <option value="http">http</option>
+            <option value="https">https</option>
+        </select>
+    </div>
+
+    <div>
+        <div class="label">SHORTENER</div>
+        <select id="shrtnr">
+            <option value="">Default</option>
+            <option value="tinyurl">tinyurl</option>
+            <option value="is.gd">is.gd</option>
+        </select>
+    </div>
+
+    <div>
+        <div class="label">APP</div>
+        <select id="asApp">
+			<option value="We Heart It">We Heart It</option>
+			<option value="Pinterest">Pinterest</option>
+			<option value="Instagram">Instagram</option>
+			<option value="Vimeo">Vimeo</option>
+			<option value="Flickr">Flickr</option>
+			<option value="Metacafe">Metacafe</option>
+			<option value="YouTube">YouTube</option>
+        </select>
+    </div>
+</div>
+
+<div class="row3">
+
+<div>
+
+<div class="label">LOOP COUNT</div>
+
+<input
+type="number"
+id="loop"
+value="0"
+/>
+
+</div>
+
+<div>
+
+<div class="label">MULTY CREATE</div>
+
+<input
+type="number"
+id="number"
+value="1"
+/>
+
+</div>
+
+<div>
+
+<div class="label">LOOP DELAY</div>
+
+<input
+type="number"
+id="delay"
+value="6000"
+/>
+
+</div>
+
+</div>
+
+<br/>
+<div class="stat-grid">
+
+<div class="stat">
+<h2 id="loopNow">0</h2>
+<span>LOOP</span>
+</div>
+
+<div class="stat">
+<h2 id="resultNow">0</h2>
+<span>RESULT</span>
+</div>
+
+</div>
+
+<div class="progress-title">
+<span>PROGRESS</span>
+<span id="percentText">0%</span>
+</div>
+
+<div class="progress-wrap">
+<div class="progress" id="progress"></div>
+</div>
+
+<div class="status-box" id="status">
+<div class="status-dot"></div>
+STOPPED
+</div>
+
+<div class="section-card">
+
+<div class="circle-grid">
+
+<button
+id="play"
+class="circle-btn play"
+>
+▶
+<div>START BOT</div>
+</button>
+
+<button
+id="stop"
+class="circle-btn stop"
+>
+■
+<div>STOP BOT</div>
+</button>
+
+<button
+id="export"
+class="circle-btn export"
+>
+⬇
+<div>DOWNLOAD</div>
+</button>
+
+<button
+id="clear"
+class="circle-btn clear"
+>
+🗑
+<div>CLEAR RESULT</div>
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-card" id="loginPanel">
+
+    <div
+        id="loginToggle"
+        style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        cursor:pointer;
+        margin-top:10px;
+        "
+    >
+
+        <div
+            class="label"
+            style="
+            margin:0;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            "
+        >
+            <span>LOGIN LinkNil</span>
+            |
+            <span>SAVE</span>
+
+            <input
+                type="checkbox"
+                id="rememberLogin"
+                style="
+                width:14px;
+                height:14px;
+                margin:0;
+                cursor:pointer;
+                "
+            />
+
+        </div>
+
+    </div>
+<br/>
+    <div id="loginContent">
+
+        <input
+            type="text"
+            id="loginUrl"
+            placeholder="https://website.com/login"
+            value="https://manage.genswots.com/helloknil"
+        />
+
+        <div class="row">
+
+            <div>
+
+                <div class="label">
+                    EMAIL
+                </div>
+
+                <input
+                    type="text"
+                    id="loginEmail"
+                    value="basreng@linknil.app"
+                />
+
+            </div>
+
+            <div>
+
+                <div class="label">
+                    PASSWORD
+                </div>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    value="minggu-cuaca-terang"
+                />
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="section-card" id="redirectPanel">
+
+		<div class="info-box">
+
+		<div class="label">
+			📌 NOTE
+		</div>
+
+		<textarea
+			id="savedInfo"
+			placeholder="gae nyimpen opo2, sakarepe samean&#10;ojo lali klik SAVE"
+		></textarea>
+
+		<div class="info-actions">
+
+		<button id="saveInfoBtn">
+			SAVE
+		</button>
+
+		<button id="clearInfoBtn">
+			CLEAR
+		</button>
+
+		</div>
+		</div>
+
+</div>
+
+</div>
+
+<div class="right" id="statusPanel">
+
+<div id="statusOnly">
+
+<div class="section-card">
+
+    <div class="section-title">
+        Activity Log
+    </div>
+
+    <textarea
+        id="activityLog"
+        readonly
+        style="
+        height:100px;
+        font-size:10px;
+        "
+    ></textarea>
+	
+	 <button id="clearLogBtn">
+        CLEAR LOG
+    </button>
+
+</div>
+</div>
+
+
+</div>
+
+<div id="generatorContent" class="tab-content-panel">
+
+    <div class="section-card" id="generatorPanel">
+
+        <div class="info-box">
+
+            <div class="label">
+                🌐 RANDOM DOMAIN LIST
+            </div>
+
+            <textarea
+                id="domainList"
+                placeholder="a.com&#10;b.com&#10;c.com"
+                style="height:60px;"
+            ></textarea>
+
+            <div class="info-actions">
+                <button id="saveDomainBtn">SAVE</button>
+                <button id="clearDomainBtn">CLEAR</button>
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <div class="label">
+                🔥 EMOJI LIST
+            </div>
+
+            <textarea
+                id="emojiList"
+                style="height:45px;"
+            ></textarea>
+
+            <div class="info-actions">
+                <button id="saveEmojiBtn">SAVE</button>
+                <button id="clearEmojiBtn">CLEAR</button>
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <div class="label">
+                ✨ SYMBOL LIST
+            </div>
+
+            <textarea
+                id="symbolList"
+                style="height:45px;"
+            ></textarea>
+
+            <div class="info-actions">
+                <button id="saveSymbolBtn">SAVE</button>
+                <button id="clearSymbolBtn">CLEAR</button>
+            </div>
+
+        </div>
+		
+
+</div>
+</div>
+
+<script src="popup.js"></script>
+<script src="tabs.js"></script>
+
+
+</body>
+</html>
